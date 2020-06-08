@@ -14,3 +14,16 @@
 	height: 100vh;
 	background-color: #282a36;
 }
+
+#overlay {
+	position: fixed;
+	z-index: 5;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background-color: #ffffff80;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}

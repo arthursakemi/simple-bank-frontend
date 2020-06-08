@@ -1,5 +1,29 @@
 #login-card {
 	width: 300px;
 	padding: 30px;
-	background-color: #bd93f9;
+	background-color: #1f72a1;
+	color: #f5f5f5;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+#card-title {
+	margin-bottom: 20px;
+}
+
+#login-button {
+	width: 100%;
+	background-color: #cc7f18;
+	margin-top: 10px;
+}
+
+#login-button:hover {
+	background-color: #e4a758;
+}
+
+form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }

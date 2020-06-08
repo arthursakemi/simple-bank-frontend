@@ -27,7 +27,9 @@
 		></script>
 		<link rel="stylesheet" href="./CSS/base.css" />
 		<link rel="stylesheet" href="./CSS/home.css" />
+		<link rel="stylesheet" href="./CSS/modal.css" />
 		<script src="./JS/home.js"></script>
+		<script src="./JS/transactionModal.js" defer></script>
 		<title>SimpleBank Home</title>
 	</head>
 	<body>
@@ -61,7 +63,7 @@
 					</div>
 				</header>
 				<div id="content">
-					<button id="transfer" class="transaction-button">
+					<button id="transfer" class="transaction-button" onclick="showTransferModal()">
 						<div id="transfer-icon" class="button-icon">
 							<svg
 								class="bi bi-arrow-down-up"
@@ -87,7 +89,7 @@
 						</div>
 						<label class="button-label">Transferência</label>
 					</button>
-					<button id="withdraw" class="transaction-button">
+					<button id="withdraw" class="transaction-button" onclick="showWithdrawModal()">
 						<div id="up-arrow-icon" class="button-icon">
 							<h1 class="dollar-sign">$</h1>
 							<svg
@@ -110,7 +112,7 @@
 						</div>
 						<label class="button-label">Saque</label>
 					</button>
-					<button id="deposit" class="transaction-button">
+					<button id="deposit" class="transaction-button" onclick="showDepositModal()">
 						<div id="up-arrow-icon" class="button-icon">
 							<h1 class="dollar-sign">$</h1>
 							<svg
