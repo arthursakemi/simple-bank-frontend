@@ -20,22 +20,17 @@
 	cursor: pointer;
 }
 
-.transaction-button:hover {
-	color: #cc7f18;
-	border: 6px solid #cc7f18;
-}
-
 #pay-icon {
 	font-size: 50px;
 }
 
 footer {
 	height: 120px;
-	padding: 20px 40px;
+	padding: 20px 55px;
 	background-color: #1f72a1;
 	display: grid;
-	grid-template-columns: repeat(4, 80px);
-	gap: 10px;
+	grid-template-columns: repeat(3, 80px);
+	gap: 30px;
 }
 
 .atm-dollar-sign {

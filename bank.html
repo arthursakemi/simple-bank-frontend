@@ -25,8 +25,11 @@
 			integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
 			crossorigin="anonymous"
 		></script>
+		<script src="./JS/clientModal.js"></script>
+		<script src="https://unpkg.com/axios/dist/axios.min.js" defer></script>
 		<link rel="stylesheet" href="./CSS/bank.css" />
 		<link rel="stylesheet" href="./CSS/base.css" />
+		<link rel="stylesheet" href="./CSS/modal.css" />
 		<title>SimpleBank Agência</title>
 	</head>
 	<body>
@@ -37,7 +40,7 @@
 					<h2>Banco</h2>
 				</header>
 				<div id="content">
-					<button id="create-client" class="transaction-button">
+					<button id="create-client" class="transaction-button" onclick="showCreateClientModal()">
 						<div id="extract-icon" class="button-icon">
 							<svg
 								class="bi bi-person-plus-fill"
@@ -58,8 +61,9 @@
 							</svg>
 						</div>
 						<label class="button-label">Cadastrar</label>
+						<label class="button-label">Cliente</label>
 					</button>
-					<button id="delete-client" class="transaction-button">
+					<button id="delete-client" class="transaction-button" onclick="showClientDeletionModal()">
 						<div id="extract-icon" class="button-icon">
 							<svg
 								class="bi bi-person-dash-fill"
@@ -76,8 +80,9 @@
 							</svg>
 						</div>
 						<label class="button-label">Excluir</label>
+						<label class="button-label">Cliente</label>
 					</button>
-					<button id="list-clients" class="transaction-button">
+					<button id="list-clients" class="transaction-button" onclick="showClientListModal()">
 						<div id="extract-icon" class="button-icon">
 							<svg
 								class="bi bi-person-lines-fill"
@@ -94,6 +99,7 @@
 							</svg>
 						</div>
 						<label class="button-label">Listar</label>
+						<label class="button-label">Cliente</label>
 					</button>
 				</div>
 				<footer>

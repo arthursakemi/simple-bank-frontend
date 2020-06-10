@@ -46,12 +46,12 @@ header {
 	flex-grow: 1;
 	background-color: #3181af;
 	display: grid;
-	grid-template-columns: repeat(4, 80px);
+	grid-template-columns: repeat(3, 80px);
 	grid-template-rows: repeat(auto, 80px);
-	gap: 10px;
+	gap: 30px;
 	justify-content: center;
 	align-content: start;
-	padding: 40px;
+	padding: 40px 55px;
 }
 
 .button-label {
@@ -65,6 +65,11 @@ header {
 	align-items: center;
 	position: relative;
 	top: 5px;
+}
+
+.transaction-button:hover {
+	color: #cc7f18;
+	border: 6px solid #cc7f18;
 }
 
 .transaction-button {
