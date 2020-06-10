@@ -1,3 +1,5 @@
+const host = "http://localhost:8080";
+
 const showCreateClientModal = () => {
 	const overlay = document.createElement("div");
 	overlay.id = "overlay";
@@ -19,8 +21,9 @@ const createClientRegistrationModal = () => {
 	modal.appendChild(modalTitle);
 
 	const form = document.createElement("form");
+	form.id = "client-form";
 
-	const comboText = ["", "Pessoa Física", "Pessoa Jurídica", "Conta Corrente"];
+	const comboText = ["", "Pessoa Física", "Pessoa Jurídica"];
 
 	const tipoConta = createComboBoxGroup("Tipo de conta*", "tipo", comboText);
 	form.appendChild(tipoConta);
@@ -40,7 +43,13 @@ const createClientRegistrationModal = () => {
 	const address = createFromGroup("Endereço*", "address", "text", true);
 	form.appendChild(address);
 
-	const buttonGroup = createButtonGroup("Cancelar", "Cadastrar");
+	const user = createFromGroup("Usuário*", "user", "text", true);
+	form.appendChild(user);
+
+	const password = createFromGroup("Senha*", "password", "password", true);
+	form.appendChild(password);
+
+	const buttonGroup = createButtonGroup("Cancelar", "Cadastrar", newClientClicked);
 	form.appendChild(buttonGroup);
 
 	modal.appendChild(form);
@@ -122,10 +131,77 @@ const createClientListModal = async () => {
 	return modal;
 };
 
+const showClientRegistrationSuccessModal = (client) => {
+	const overlay = document.createElement("div");
+	overlay.id = "overlay";
+
+	const modal = createClientRegistrationSuccessModal(client);
+
+	overlay.appendChild(modal);
+
+	console.log(document.getElementById("wrapper"));
+
+	document.getElementById("wrapper").appendChild(overlay);
+};
+
+const createClientRegistrationSuccessModal = (client) => {
+	const modal = document.createElement("div");
+	modal.id = "modal";
+
+	const modalTitle = document.createElement("h2");
+	modalTitle.className = "modal-title";
+	modalTitle.innerHTML = "Cadastrado com Sucesso!";
+	modal.appendChild(modalTitle);
+
+	const clientData = document.createElement("div");
+	clientData.className = "client-data-container";
+
+	const clientId = document.createElement("span");
+	clientId.className = "client-data";
+	clientId.innerHTML = `ID: ${client.id}`;
+
+	const clientName = document.createElement("span");
+	clientName.className = "client-data";
+	clientName.innerHTML = client.nome ? `Nome: ${client.nome}` : `Nome Fantasia: ${client.nomeFantasia}`;
+
+	const registro = document.createElement("span");
+	registro.className = "client-data";
+	registro.innerHTML = client.tipo == 1 ? `CPF: ${client.registro}` : `CNPJ: ${client.registro}`;
+
+	const telefone = document.createElement("span");
+	telefone.className = "client-data";
+	telefone.innerHTML = `Telefone: ${client.telefone}`;
+
+	const email = document.createElement("span");
+	email.className = "client-data";
+	email.innerHTML = `Email: ${client.email}`;
+
+	const usuario = document.createElement("span");
+	usuario.className = "client-data";
+	usuario.innerHTML = `Usuário: ${client.usuario}`;
+
+	clientData.appendChild(clientId);
+	clientData.appendChild(clientName);
+	clientData.appendChild(registro);
+	clientData.appendChild(telefone);
+	clientData.appendChild(email);
+	clientData.appendChild(usuario);
+
+	modal.appendChild(clientData);
+
+	modal.appendChild(createButtonGroup("", "Fechar", closeModal));
+
+	return modal;
+};
+
 const createClientListItem = (client) => {
 	const clientContainer = document.createElement("div");
 	clientContainer.id = client.id;
 	clientContainer.className = "client-container";
+
+	const clientId = document.createElement("span");
+	clientId.className = "client-id";
+	clientId.innerHTML = `ID: ${client.id}`;
 
 	const clientName = document.createElement("span");
 	clientName.className = "client-name";
@@ -139,6 +215,7 @@ const createClientListItem = (client) => {
 	telefone.className = "telefone";
 	telefone.innerHTML = `Telefone: ${client.telefone}`;
 
+	clientContainer.appendChild(clientId);
 	clientContainer.appendChild(clientName);
 	clientContainer.appendChild(registro);
 	clientContainer.appendChild(telefone);
@@ -180,6 +257,7 @@ const createFromGroup = (label, id, type, required = false, min = 0, step = 1) =
 
 	const inputField = document.createElement("input");
 	inputField.id = id;
+	inputField.name = id;
 	inputField.type = type;
 	inputField.className = "form-control";
 	inputField.required = required;
@@ -195,21 +273,33 @@ const createFromGroup = (label, id, type, required = false, min = 0, step = 1) =
 	return formGroup;
 };
 
-const createButtonGroup = (btn1Txt, btn2Txt) => {
+const createButtonGroup = (btn1Txt, btn2Txt, action) => {
 	const buttonGroup = document.createElement("div");
 	buttonGroup.className = "button-group";
 
-	const cancelButton = document.createElement("button");
-	cancelButton.type = "button";
-	cancelButton.className = "btn btn-primary custom-button";
-	cancelButton.innerHTML = btn1Txt;
-	cancelButton.addEventListener("click", closeModal);
+	let cancelButton;
+	let transferButton;
 
-	const transferButton = document.createElement("button");
-	transferButton.type = "button";
-	transferButton.className = "btn btn-primary custom-button";
-	transferButton.innerHTML = btn2Txt;
-	transferButton.id = "action-button";
+	if (btn1Txt) {
+		cancelButton = document.createElement("button");
+		cancelButton.type = "button";
+		cancelButton.className = "btn btn-primary custom-button";
+		cancelButton.innerHTML = btn1Txt;
+		cancelButton.addEventListener("click", closeModal);
+	} else {
+		cancelButton = document.createElement("div");
+	}
+
+	if (btn2Txt) {
+		transferButton = document.createElement("button");
+		transferButton.type = "button";
+		transferButton.className = "btn btn-primary custom-button";
+		transferButton.innerHTML = btn2Txt;
+		transferButton.id = "action-button";
+		transferButton.addEventListener("click", action);
+	} else {
+		transferButton = document.createElement("div");
+	}
 
 	buttonGroup.appendChild(cancelButton);
 	buttonGroup.appendChild(transferButton);
@@ -222,7 +312,54 @@ const closeModal = () => {
 };
 
 const getClientList = async () => {
-	const url = "http://localhost:8080/clientes";
+	const url = `${host}/clientes`;
 
 	return await axios.get(url);
 };
+
+const newClientClicked = async () => {
+	await postNewClient()
+		.then((response) => {
+			closeModal();
+			console.log(response);
+			showClientRegistrationSuccessModal(response.data);
+		})
+		.catch((error) => {
+			alert("Algo deu errado!");
+			console.log(error);
+		});
+};
+
+const postNewClient = async () => {
+	const form = document.getElementById("client-form");
+
+	const url = `${host}/cliente/create`;
+
+	const client = {
+		registro: form.register.value,
+		nome: form.name.value,
+		telefone: form.telefone.value,
+		email: form.email.value,
+		endereco: form.address.value,
+		usuario: form.user.value,
+		password: form.password.value,
+		tipo: form.tipo.value,
+		ativo: true,
+	};
+
+	return await axios.post(url, client);
+};
+
+const otto = {
+	ativo: true,
+	email: "otto@mail.com",
+	endereco: "Rua otto 55",
+	id: 13,
+	nome: "Otto",
+	registro: "65485232155",
+	telefone: "11965487582",
+	tipo: 1,
+	usuario: "otto",
+};
+
+showClientRegistrationSuccessModal(otto);

@@ -56,3 +56,13 @@ footer {
 .transaction-button label {
 	margin: 0;
 }
+
+#modal form {
+	overflow: auto;
+}
+
+.client-data-container {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 20px;
+}
