@@ -1,0 +1,29 @@
+header h1,
+header h2 {
+	text-align: center;
+}
+
+footer {
+	height: 120px;
+	padding: 20px 40px;
+	background-color: #1f72a1;
+	display: flex;
+	justify-content: center;
+}
+
+.dollar-sign {
+	position: relative;
+	font-size: 35px;
+	left: 10px;
+}
+
+#home-button {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 100px;
+}
+
+#home-icon {
+	margin-bottom: 15px;
+}

@@ -15,6 +15,21 @@
 	background-color: #282a36;
 }
 
+header {
+	color: whitesmoke;
+	background-color: #1f72a1;
+	height: 150px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+#wrapper {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
 #overlay {
 	position: fixed;
 	z-index: 5;
@@ -26,4 +41,41 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
+}
+#content {
+	flex-grow: 1;
+	background-color: #3181af;
+	display: grid;
+	grid-template-columns: repeat(4, 80px);
+	grid-template-rows: repeat(auto, 80px);
+	gap: 10px;
+	justify-content: center;
+	align-content: start;
+	padding: 40px;
+}
+
+.button-label {
+	font-size: 10px;
+}
+
+.button-icon {
+	font-size: 40px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	top: 5px;
+}
+
+.transaction-button {
+	background-color: transparent;
+	color: whitesmoke;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+	width: 80px;
+	height: 80px;
+	border: 4px solid whitesmoke;
+	border-radius: 10px;
 }
