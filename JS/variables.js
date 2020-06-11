@@ -1,1 +1,1 @@
-const host = "http://localhost:8080";
+const host = "https://simple-bank-spring.herokuapp.com";
