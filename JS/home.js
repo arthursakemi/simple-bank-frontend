@@ -79,7 +79,7 @@ const createTransactionListItem = ({ id, date, valor, idPagador, idReceptor }) =
 
 	const transactionType = document.createElement("span");
 	transactionType.className = "transaction-type";
-	transactionType.innerHTML = idReceptor ? "Transferência" : valor >= 0 ? "Saque" : "Deposito";
+	transactionType.innerHTML = idReceptor ? "Transferência" : valor >= 0 ? "Deposito" : "Saque";
 	transactionContainer.appendChild(transactionType);
 
 	if (idPagador == currentUserAcc.id) {
