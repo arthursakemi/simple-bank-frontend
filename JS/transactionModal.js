@@ -19,14 +19,15 @@ const createTransferModal = () => {
 	modal.appendChild(modalTitle);
 
 	const form = document.createElement("form");
+	form.id = "transfer-form";
 
-	const recieverId = createFromGroup("Transferir para", "destination-id", "number", 0, 1);
+	const recieverId = createFromGroup("Transferir para", "destinationId", "number", 0, 1);
 	form.appendChild(recieverId);
 
 	const amount = createFromGroup("Valor", "amount", "number", 0, 0.01);
 	form.appendChild(amount);
 
-	const buttonGroup = createButtonGroup("Cancelar", "Transferir");
+	const buttonGroup = createButtonGroup("Cancelar", "Transferir", transferButtonClicked);
 	form.appendChild(buttonGroup);
 
 	modal.appendChild(form);
@@ -55,11 +56,12 @@ const createWithdrawModal = () => {
 	modal.appendChild(modalTitle);
 
 	const form = document.createElement("form");
+	form.id = "withdraw-form";
 
 	const amount = createFromGroup("Valor", "amount", "number", 0, 0.01);
 	form.appendChild(amount);
 
-	const buttonGroup = createButtonGroup("Cancelar", "Sacar");
+	const buttonGroup = createButtonGroup("Cancelar", "Sacar", withdrawButtonClicked);
 	form.appendChild(buttonGroup);
 
 	modal.appendChild(form);
@@ -88,11 +90,12 @@ const createDepositModal = () => {
 	modal.appendChild(modalTitle);
 
 	const form = document.createElement("form");
+	form.id = "deposit-form";
 
 	const amount = createFromGroup("Valor", "amount", "number", 0, 0.01);
 	form.appendChild(amount);
 
-	const buttonGroup = createButtonGroup("Cancelar", "Depositar");
+	const buttonGroup = createButtonGroup("Cancelar", "Depositar", depositButtonClicked);
 	form.appendChild(buttonGroup);
 
 	modal.appendChild(form);
@@ -123,21 +126,33 @@ const createFromGroup = (label, id, type, min, step) => {
 	return formGroup;
 };
 
-const createButtonGroup = (btn1Txt, btn2Txt) => {
+const createButtonGroup = (btn1Txt, btn2Txt, action) => {
 	const buttonGroup = document.createElement("div");
 	buttonGroup.className = "button-group";
 
-	const cancelButton = document.createElement("button");
-	cancelButton.type = "button";
-	cancelButton.className = "btn btn-primary custom-button";
-	cancelButton.innerHTML = btn1Txt;
-	cancelButton.addEventListener("click", closeModal);
+	let cancelButton;
+	let transferButton;
 
-	const transferButton = document.createElement("button");
-	transferButton.type = "button";
-	transferButton.className = "btn btn-primary custom-button";
-	transferButton.innerHTML = btn2Txt;
-	transferButton.id = "action-button";
+	if (btn1Txt) {
+		cancelButton = document.createElement("button");
+		cancelButton.type = "button";
+		cancelButton.className = "btn btn-primary custom-button";
+		cancelButton.innerHTML = btn1Txt;
+		cancelButton.addEventListener("click", closeModal);
+	} else {
+		cancelButton = document.createElement("div");
+	}
+
+	if (btn2Txt) {
+		transferButton = document.createElement("button");
+		transferButton.type = "button";
+		transferButton.className = "btn btn-primary custom-button";
+		transferButton.innerHTML = btn2Txt;
+		transferButton.id = "action-button";
+		transferButton.addEventListener("click", action);
+	} else {
+		transferButton = document.createElement("div");
+	}
 
 	buttonGroup.appendChild(cancelButton);
 	buttonGroup.appendChild(transferButton);
@@ -147,4 +162,75 @@ const createButtonGroup = (btn1Txt, btn2Txt) => {
 
 const closeModal = () => {
 	document.getElementById("overlay").remove();
+};
+
+const transferButtonClicked = async () => {
+	putTransferencia()
+		.then((response) => {
+			closeModal();
+			showSuccessModal("Transferência feita com Sucesso!");
+		})
+		.catch((error) => {
+			console.log(error);
+			showFailModal();
+		});
+};
+
+const putTransferencia = async () => {
+	const url = `${host}/transacoes/transferencia`;
+
+	const form = document.getElementById("transfer-form");
+	const body = {
+		idPagador: currentUserAcc.id,
+		idReceptor: form.destinationId.value,
+		valor: form.amount.value,
+	};
+
+	return axios.put(url, body);
+};
+
+const withdrawButtonClicked = async () => {
+	postWithdraw()
+		.then((response) => {
+			closeModal();
+			showSuccessModal("Saque realizado com Sucesso!");
+		})
+		.catch((error) => {
+			console.log(error);
+			showFailModal();
+		});
+};
+
+const postWithdraw = async () => {
+	const url = `${host}/transacoes/saque`;
+
+	const form = document.getElementById("withdraw-form");
+	const body = {
+		idConta: currentUserAcc.id,
+		valor: form.amount.value,
+	};
+	return await axios.post(url, body);
+};
+
+const depositButtonClicked = async () => {
+	postDeposit()
+		.then((response) => {
+			closeModal();
+			showSuccessModal("Deposito realizado com Sucesso!");
+		})
+		.catch((error) => {
+			console.log(error);
+			showFailModal();
+		});
+};
+
+const postDeposit = async () => {
+	const url = `${host}/transacoes/deposito`;
+
+	const form = document.getElementById("deposit-form");
+	const body = {
+		idConta: currentUserAcc.id,
+		valor: form.amount.value,
+	};
+	return await axios.post(url, body);
 };

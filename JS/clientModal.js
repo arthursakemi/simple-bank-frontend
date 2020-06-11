@@ -74,18 +74,16 @@ const createClientDeletionModal = () => {
 
 	const modalTitle = document.createElement("h2");
 	modalTitle.className = "modal-title";
-	modalTitle.innerHTML = "Exclusão de Cliente";
+	modalTitle.innerHTML = "Desativação de Cliente";
 	modal.appendChild(modalTitle);
 
 	const form = document.createElement("form");
+	form.id = "delete-form";
 
-	const clientName = createFromGroup("Nome*", "name", "text", true);
-	form.appendChild(clientName);
+	const clientId = createFromGroup("Número do Cliente", "clientId", "number", true);
+	form.appendChild(clientId);
 
-	const register = createFromGroup("CPF/CNPJ*", "register", "number", true);
-	form.appendChild(register);
-
-	const buttonGroup = createButtonGroup("Cancelar", "Cadastrar");
+	const buttonGroup = createButtonGroup("Cancelar", "Desativar", deactivateClientClicked);
 	form.appendChild(buttonGroup);
 
 	modal.appendChild(form);
@@ -125,7 +123,7 @@ const createClientListModal = async () => {
 		});
 	});
 
-	const buttonGroup = createButtonGroup("Cancelar", "Fechar");
+	const buttonGroup = createButtonGroup("", "Fechar", closeModal);
 	modal.appendChild(buttonGroup);
 
 	return modal;
@@ -323,9 +321,10 @@ const newClientClicked = async () => {
 			closeModal();
 			console.log(response);
 			showClientRegistrationSuccessModal(response.data);
+			showSuccessModal("");
 		})
 		.catch((error) => {
-			alert("Algo deu errado!");
+			showFailModal();
 			console.log(error);
 		});
 };
@@ -350,6 +349,31 @@ const postNewClient = async () => {
 	return await axios.post(url, client);
 };
 
+const deactivateClientClicked = async () => {
+	await putDeactivateClient()
+		.then((response) => {
+			closeModal();
+			console.log(response);
+			showSuccessModal("Cliente desativado com sucesso!");
+		})
+		.catch((error) => {
+			showFailModal();
+			console.log(error);
+		});
+};
+
+const putDeactivateClient = async () => {
+	const form = document.getElementById("delete-form");
+
+	const clientId = form.clientId.value;
+
+	const url = `${host}/cliente/delete/${clientId}`;
+
+	console.log(url);
+
+	return await axios.put(url);
+};
+
 const otto = {
 	ativo: true,
 	email: "otto@mail.com",
@@ -361,5 +385,3 @@ const otto = {
 	tipo: 1,
 	usuario: "otto",
 };
-
-showClientRegistrationSuccessModal(otto);

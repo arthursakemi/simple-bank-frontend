@@ -28,15 +28,19 @@
 		<link rel="stylesheet" href="./CSS/base.css" />
 		<link rel="stylesheet" href="./CSS/home.css" />
 		<link rel="stylesheet" href="./CSS/modal.css" />
+		<link rel="stylesheet" href="./CSS/bank.css" />
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+		<script src="./JS/variables.js"></script>
 		<script src="./JS/home.js"></script>
 		<script src="./JS/transactionModal.js" defer></script>
+		<script src="./JS/successModal.js" defer></script>
 		<title>SimpleBank Home</title>
 	</head>
 	<body>
 		<div id="body">
 			<div id="wrapper">
 				<header>
-					<h2 id="welcome-user">Bem Vindo Arthur!</h2>
+					<h2 id="welcome-user">Bem Vindo!</h2>
 					<div id="balance-container">
 						<h1 id="balance">R$ -----.--</h1>
 						<div id="eye-icon" onclick="toogleSlashedEye()" slashed="">
@@ -107,7 +111,7 @@
 						</div>
 						<label class="button-label">Pagar</label>
 					</button>
-					<button id="extract" class="transaction-button">
+					<button id="extract" class="transaction-button" onclick="showTransactionListModal()">
 						<div id="extract-icon" class="button-icon">
 							<svg
 								class="bi bi-receipt"
@@ -130,7 +134,7 @@
 						<label class="button-label">Extrato</label>
 					</button>
 				</div>
-				<footer>
+				<footer id="home-footer">
 					<a href="./atm.html">
 						<button id="atm" class="transaction-button">
 							<div id="extract-icon" class="button-icon">

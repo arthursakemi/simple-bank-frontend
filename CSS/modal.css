@@ -33,3 +33,25 @@
 #action-button:hover {
 	background-color: #e4a758;
 }
+
+#success-icon {
+	color: #11bb77;
+	font-size: 200px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 30px;
+}
+
+#fail-icon {
+	color: #bb1111;
+	font-size: 200px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 30px;
+}
+
+.tipo-conta {
+	margin-bottom: 10px;
+}

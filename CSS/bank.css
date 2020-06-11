@@ -33,7 +33,9 @@ footer {
 	padding: 30px;
 }
 
-#client-list {
+#acc-list,
+#client-list,
+#transaction-list {
 	overflow: auto;
 	padding: 10px;
 	margin: 10px 0;
@@ -45,7 +47,8 @@ footer {
 	border-bottom: 1px solid darkgray;
 }
 
-.telefone {
+.telefone,
+.transaction-date {
 	margin-bottom: 10px;
 }
 

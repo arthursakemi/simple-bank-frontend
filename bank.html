@@ -26,6 +26,8 @@
 			crossorigin="anonymous"
 		></script>
 		<script src="./JS/clientModal.js" defer></script>
+		<script src="./JS/accountModal.js" defer></script>
+		<script src="./JS/successModal.js" defer></script>
 		<script src="https://unpkg.com/axios/dist/axios.min.js" defer></script>
 		<link rel="stylesheet" href="./CSS/bank.css" />
 		<link rel="stylesheet" href="./CSS/base.css" />
@@ -79,7 +81,7 @@
 								/>
 							</svg>
 						</div>
-						<label class="button-label">Excluir</label>
+						<label class="button-label">Desativar</label>
 						<label class="button-label">Cliente</label>
 					</button>
 					<button id="list-clients" class="transaction-button" onclick="showClientListModal()">
@@ -99,7 +101,83 @@
 							</svg>
 						</div>
 						<label class="button-label">Listar</label>
-						<label class="button-label">Cliente</label>
+						<label class="button-label">Clientes</label>
+					</button>
+					<button id="create-acc" class="transaction-button" onclick="showCreateAccModal()">
+						<div id="extract-icon" class="button-icon">
+							<svg
+								class="bi bi-folder-plus"
+								width="1em"
+								height="1em"
+								viewBox="0 0 16 16"
+								fill="currentColor"
+								xmlns="http://www.w3.org/2000/svg"
+							>
+								<path
+									fill-rule="evenodd"
+									d="M9.828 4H2.19a1 1 0 0 0-.996 1.09l.637 7a1 1 0 0 0 .995.91H9v1H2.826a2 2 0 0 1-1.991-1.819l-.637-7a1.99 1.99 0 0 1 .342-1.31L.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3h3.982a2 2 0 0 1 1.992 2.181L15.546 8H14.54l.265-2.91A1 1 0 0 0 13.81 4H9.828zm-2.95-1.707L7.587 3H2.19c-.24 0-.47.042-.684.12L1.5 2.98a1 1 0 0 1 1-.98h3.672a1 1 0 0 1 .707.293z"
+								/>
+								<path
+									fill-rule="evenodd"
+									d="M13.5 10a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1H13v-1.5a.5.5 0 0 1 .5-.5z"
+								/>
+								<path
+									fill-rule="evenodd"
+									d="M13 12.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0v-2z"
+								/>
+							</svg>
+						</div>
+						<label class="button-label">Cadastrar</label>
+						<label class="button-label">Conta</label>
+					</button>
+					<button id="delete-acc" class="transaction-button" onclick="showAccDeletionModal()">
+						<div id="extract-icon" class="button-icon">
+							<svg
+								class="bi bi-folder-minus"
+								width="1em"
+								height="1em"
+								viewBox="0 0 16 16"
+								fill="currentColor"
+								xmlns="http://www.w3.org/2000/svg"
+							>
+								<path
+									fill-rule="evenodd"
+									d="M9.828 4H2.19a1 1 0 0 0-.996 1.09l.637 7a1 1 0 0 0 .995.91H9v1H2.826a2 2 0 0 1-1.991-1.819l-.637-7a1.99 1.99 0 0 1 .342-1.31L.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3h3.982a2 2 0 0 1 1.992 2.181L15.546 8H14.54l.265-2.91A1 1 0 0 0 13.81 4H9.828zm-2.95-1.707L7.587 3H2.19c-.24 0-.47.042-.684.12L1.5 2.98a1 1 0 0 1 1-.98h3.672a1 1 0 0 1 .707.293z"
+								/>
+								<path
+									fill-rule="evenodd"
+									d="M11 11.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5z"
+								/>
+							</svg>
+						</div>
+						<label class="button-label">Excluir</label>
+						<label class="button-label">Conta</label>
+					</button>
+					<button id="list-acc" class="transaction-button" onclick="showAccListModal()">
+						<div id="extract-icon" class="button-icon">
+							<svg
+								class="bi bi-card-list"
+								width="1em"
+								height="1em"
+								viewBox="0 0 16 16"
+								fill="currentColor"
+								xmlns="http://www.w3.org/2000/svg"
+							>
+								<path
+									fill-rule="evenodd"
+									d="M14.5 3h-13a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"
+								/>
+								<path
+									fill-rule="evenodd"
+									d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8zm0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5z"
+								/>
+								<circle cx="3.5" cy="5.5" r=".5" />
+								<circle cx="3.5" cy="8" r=".5" />
+								<circle cx="3.5" cy="10.5" r=".5" />
+							</svg>
+						</div>
+						<label class="button-label">Listar</label>
+						<label class="button-label">Contas</label>
 					</button>
 				</div>
 				<footer>

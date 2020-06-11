@@ -30,7 +30,8 @@ header {
 	flex-direction: column;
 }
 
-#overlay {
+#overlay,
+#success-overlay {
 	position: fixed;
 	z-index: 5;
 	top: 0;
